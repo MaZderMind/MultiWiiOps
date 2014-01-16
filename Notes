@@ -1,0 +1,33 @@
+Views
+   !Disable what's not available
+
+   Cockpit
+      Artificial horizon
+      Compass
+      State-LEDs
+      GPS-Koordinaten
+         Sattelites
+         Distance to Home
+         Geschwindigkeit
+      Höhe
+         Über Grund
+      Akku Voltage & Power
+
+
+   Tuning
+      PIDs
+      Throttel-Expo
+      Pitch-Expo
+
+
+   Configuration
+      Motor-Speed
+      Graph?
+      RC-Monitor
+      Status-Checkboxen
+
+
+   GUI-Settings
+      Port
+      Baud-Rate
+      Logging
