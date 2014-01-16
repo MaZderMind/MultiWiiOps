@@ -30,3 +30,6 @@ I'm not someone who doesn't like to write documentation - I just don't like to w
 
 ## Contact
 If you have any questions just ask at github@mazdermind.de.
+
+## Licence
+This Project is licensed under the FreeBSD-License
