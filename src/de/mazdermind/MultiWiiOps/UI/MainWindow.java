@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 
+import de.mazdermind.MultiWiiOps.UI.Cockpit.Cockpit;
+
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 4338065427139820624L;
 	private static final ResourceBundle l18n = ResourceBundle.getBundle("l18n.GUI");
