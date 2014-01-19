@@ -10,15 +10,23 @@ public class MeterPanel extends JLabel {
     public static final int MIN_FONT_SIZE = 3;
     public static final int MAX_FONT_SIZE = 240;
 
-	public MeterPanel() {
+	private int preferredHeigh;
+
+    public MeterPanel() {
+    	this(72, 100);
+    }
+    
+	public MeterPanel(int fontSize, int preferredHeigh) {
 		FontLoader.ensureFontsAreLoaded();
-		setFont(new Font("Digital-7 Italic", Font.PLAIN, 72));
-		setText("50.24m");
+		
+		this.preferredHeigh = preferredHeigh;
+
+		setFont(new Font("Digital-7 Italic", Font.PLAIN, fontSize));
 		setHorizontalAlignment(RIGHT);
 	}
     
     @Override
     public Dimension getPreferredSize() {
-    	return new Dimension();
+    	return new Dimension(0, preferredHeigh);
     }
 }

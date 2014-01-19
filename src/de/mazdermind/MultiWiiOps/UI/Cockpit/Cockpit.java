@@ -37,15 +37,15 @@ public class Cockpit extends JPanel {
 		add(voltsPanel,
 				new GBC(0, 2)
 				.setInsets(5)
-				.setWeight(1, 1)
+				.setWeight(2, 0)
 				.setFill(GBC.BOTH));
 
 		altitudePanel = new AltitudePanel();
 		add(altitudePanel,
 				new GBC(1, 2)
 				.setInsets(5)
-				.setWeight(2, 1)
-				.setFill(GBC.BOTH));
+				.setWeight(1.5, 0)
+				.setFill(GBC.HORIZONTAL));
 		
 
 		TestPanel gpsPanel = new TestPanel("gps");
