@@ -11,7 +11,7 @@ public class StatusPanel extends JLabel {
 	private static final long serialVersionUID = 5999631872010288870L;
 
 	public StatusPanel() {
-		setLayout(new GridLayout(2, 2, 20, 20));
+		setLayout(new GridLayout(2, 6, 20, 20));
 		setOpaque(false);
 
 		add(new TestPanel("ACC", Color.GREEN));
