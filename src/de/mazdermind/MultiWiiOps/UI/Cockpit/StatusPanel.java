@@ -18,6 +18,7 @@ public class StatusPanel extends JLabel {
 
 		acc = new StatusLedPanel("ACC", sensorColor);
 		acc.setEnabled(false);
+		acc.setToolTipText("<html>ToolTipTest ;)<br/><br /><b>Foo</b>: bar bar bar bar bar bar<br/><br /><b>Moo</b>: arp arp arp arp arp arp arp arp arp arp arp arp arp</html>");
 		add(acc);
 		baro = new StatusLedPanel("BARO", sensorColor);
 		baro.setEnabled(false);
