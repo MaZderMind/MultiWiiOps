@@ -42,7 +42,7 @@ public class EnergyPanel extends JPanel {
 			.setFill(GBC.BOTH));
 		
 		charge = new MeterPanel(30, 25);
-		charge.setText("1700 mAh");
+		charge.setText("1700 m.Ah");
 		charge.setForeground(getForeground());
 		add(charge, new GBC(1, 1)
 			.setWeight(1, 1)

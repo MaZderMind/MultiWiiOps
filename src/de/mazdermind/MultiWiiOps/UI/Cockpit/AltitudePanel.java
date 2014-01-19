@@ -28,7 +28,7 @@ public class AltitudePanel extends JPanel {
 	
 
 		preasure = new MeterPanel(30, 25);
-		preasure.setText("2048 mBar");
+		preasure.setText("2048 m.Bar");
 		preasure.setForeground(getForeground());
 		add(preasure, new GBC(0, 1)
 			.setWeight(1, 1)
