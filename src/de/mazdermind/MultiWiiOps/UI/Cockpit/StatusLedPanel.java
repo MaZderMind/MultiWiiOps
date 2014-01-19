@@ -48,7 +48,7 @@ public class StatusLedPanel extends JLabel {
 		g2d.fillRoundRect(0, 0, w, h, 10, 10);
 		
 		g2d.setColor(isEnabled() ? color : color.darker().darker());
-		g2d.fillRoundRect(20, (int)(w/3.3), w-35, (int)(h/3.5), 3, 3);
+		g2d.fillRoundRect(20, (int)(w/3.4), w-40, (int)(h/3.5), 3, 3);
 		
 		g2d.setColor(isEnabled() ? Color.WHITE : Color.LIGHT_GRAY);
 		g2d.drawString(getText(), tx, ty);
