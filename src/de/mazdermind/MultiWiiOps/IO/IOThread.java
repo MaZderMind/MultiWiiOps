@@ -5,6 +5,11 @@ import java.util.logging.Logger;
 public class IOThread extends Thread {
 	private static final Logger log = Logger.getLogger( IOThread.class.getName() );
 
+	public IOThread() {
+		super();
+		setName(this.getClass().getName());
+	}
+	
 	@Override
 	public void run() {
 		try {
