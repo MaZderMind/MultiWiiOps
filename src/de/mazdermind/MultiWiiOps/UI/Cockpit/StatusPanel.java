@@ -13,36 +13,39 @@ public class StatusPanel extends JLabel {
 		setLayout(new GridLayout(2, 6, 20, 20));
 		setOpaque(false);
 		
-		acc = new StatusLedPanel("ACC", Color.GREEN);
+		Color sensorColor = new Color(0, 255, 32);
+		Color statusColor = new Color(255, 192, 32);
+
+		acc = new StatusLedPanel("ACC", sensorColor);
 		acc.setEnabled(false);
 		add(acc);
-		baro = new StatusLedPanel("BARO", Color.GREEN);
+		baro = new StatusLedPanel("BARO", sensorColor);
 		baro.setEnabled(false);
 		add(baro);
-		mag = new StatusLedPanel("MAG", Color.GREEN);
+		mag = new StatusLedPanel("MAG", sensorColor);
 		add(mag);
 		
-		arm = new StatusLedPanel("ARM", Color.YELLOW);
+		arm = new StatusLedPanel("ARM", statusColor);
 		add(arm);
-		stable = new StatusLedPanel("STABLE", Color.YELLOW);
+		stable = new StatusLedPanel("STABLE", statusColor);
 		add(stable);
 		stable.setEnabled(false);
-		horizon = new StatusLedPanel("HORIZON", Color.YELLOW);
+		horizon = new StatusLedPanel("HORIZON", statusColor);
 		add(horizon);
 		
-		gps = new StatusLedPanel("GPS", Color.GREEN);
+		gps = new StatusLedPanel("GPS", sensorColor);
 		add(gps);
-		sonar = new StatusLedPanel("SONAR", Color.GREEN);
+		sonar = new StatusLedPanel("SONAR", sensorColor);
 		add(sonar);
-		optic = new StatusLedPanel("OPTIC", Color.GREEN);
+		optic = new StatusLedPanel("OPTIC", sensorColor);
 		add(optic);
 		
-		althold = new StatusLedPanel("ALTHOLD", Color.YELLOW);
+		althold = new StatusLedPanel("ALTHOLD", statusColor);
 		althold .setEnabled(false);
 		add(althold);
-		headfree = new StatusLedPanel("HEADFREE", Color.YELLOW);
+		headfree = new StatusLedPanel("HEADFREE", statusColor);
 		add(headfree);
-		headadj = new StatusLedPanel("HEADADJ", Color.YELLOW);
+		headadj = new StatusLedPanel("HEADADJ", statusColor);
 		add(headadj);
 	}
 
