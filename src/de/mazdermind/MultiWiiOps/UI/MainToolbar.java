@@ -10,7 +10,6 @@ public class MainToolbar extends JToolBar {
 	ResourceBundle l18n = ResourceBundle.getBundle("l18n.GUI");
 
 	public MainToolbar() {
-		
 		setFloatable(false);
 		add(new JButton(l18n.getString("foo")));
 	}
