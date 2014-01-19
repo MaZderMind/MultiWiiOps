@@ -1,17 +1,22 @@
-Views
+Ansichten
    !Disable what's not available
 
    Cockpit
-      Artificial horizon
-      Compass
-      State-LEDs
-      GPS-Koordinaten
-         Sattelites
+      Lage
+      	Artificial horizon
+      	Compass
+      Status
+      	State-LEDs
+      
+      GPS
+      	 Koordinaten
+         Satteliten
          Distance to Home
          Geschwindigkeit
       Höhe
          Über Grund
-      Akku Voltage & Power
+      Power
+      	Akku Voltage & Power
 
 
    Tuning
