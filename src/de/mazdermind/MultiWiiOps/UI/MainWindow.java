@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
 
 	public MainWindow() {
 		setTitle(l18n.getString("app"));
-		setMinimumSize(new Dimension(1200, 800));
+		setMinimumSize(new Dimension(900, 600));
 		setLayout(new BorderLayout());
 		
 		toolbar = new MainToolbar();

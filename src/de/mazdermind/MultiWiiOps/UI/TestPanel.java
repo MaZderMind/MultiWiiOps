@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 public class TestPanel extends JLabel {
 	private static final long serialVersionUID = -5887360703631794529L;
-	private String label = "";
+	protected String label = "";
 
 	public TestPanel() {
 		Color bg = new Color(
@@ -38,7 +38,7 @@ public class TestPanel extends JLabel {
 		this.label = label + " - ";
 	}
 
-	private int calculateBrightness(Color c)
+	protected int calculateBrightness(Color c)
 	{
 	   return (int)Math.sqrt(
 	      c.getRed() * c.getRed() * .241 + 
