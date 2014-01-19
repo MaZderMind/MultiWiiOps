@@ -1,6 +1,7 @@
 package de.mazdermind.MultiWiiOps.UI;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -63,5 +64,10 @@ public class TestPanel extends JLabel {
 			}
 		});
 	}
+    
+    @Override
+    public Dimension getPreferredSize() {
+    	return new Dimension();
+    }
 	
 }
