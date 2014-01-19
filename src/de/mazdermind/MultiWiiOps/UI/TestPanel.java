@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 public class TestPanel extends JLabel {
 	private static final long serialVersionUID = -5887360703631794529L;
-	private String name = "";
+	private String label = "";
 
 	public TestPanel() {
 		Color bg = new Color(
@@ -22,18 +22,22 @@ public class TestPanel extends JLabel {
 		init(bg);
 	}
 
-	public TestPanel(String name)
+	public TestPanel(String label)
 	{
 		this();
-		this.name = name + " - ";
+		setLabel(label);
 	}
 
-	public TestPanel(String name, Color bg)
+	public TestPanel(String label, Color bg)
 	{
 		this(bg);
-		this.name = name + " - ";
+		setLabel(label);
 	}
-	
+
+	public void setLabel(String label) {
+		this.label = label + " - ";
+	}
+
 	private int calculateBrightness(Color c)
 	{
 	   return (int)Math.sqrt(
@@ -53,9 +57,9 @@ public class TestPanel extends JLabel {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				JLabel label = (JLabel)e.getSource();
+				JLabel componet = (JLabel)e.getSource();
 				
-				label.setText(name + label.getWidth() + "x" + label.getHeight());
+				componet.setText(label + componet.getWidth() + "x" + componet.getHeight());
 			}
 		});
 	}
