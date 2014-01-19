@@ -28,7 +28,7 @@ public class EnergyPanel extends JPanel {
 		setForeground(new Color(193, 132, 0));
 		
 		current = new MeterPanel(72, 80);
-		current.setText("-.-- A");
+		current.setText("--- A");
 		current.setForeground(getForeground());
 		current.setEnabled(false);
 		add(current, new GBC(1, 0)
@@ -36,7 +36,7 @@ public class EnergyPanel extends JPanel {
 			.setFill(GBC.BOTH));
 
 		power = new MeterPanel(30, 25);
-		power.setText("--.- W");
+		power.setText("--- W");
 		power.setForeground(getForeground());
 		power.setEnabled(false);
 		add(power, new GBC(0, 1)
@@ -44,7 +44,7 @@ public class EnergyPanel extends JPanel {
 			.setFill(GBC.BOTH));
 		
 		charge = new MeterPanel(30, 25);
-		charge.setText("---- m.Ah");
+		charge.setText("--- m.Ah");
 		charge.setForeground(getForeground());
 		charge.setEnabled(false);
 		add(charge, new GBC(1, 1)
