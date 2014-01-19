@@ -13,6 +13,7 @@ public class Cockpit extends JPanel {
 	private BearingPanel bearingPanel;
 	private StatusPanel statusPanel;
 	private AltitudePanel altitudePanel;
+	private EnergyPanel voltsPanel;
 
 	public Cockpit() {
 		setLayout(new GridBagLayout());
@@ -33,7 +34,7 @@ public class Cockpit extends JPanel {
 			.setWeight(2, 1.5)
 			.setFill(GBC.BOTH));
 
-		TestPanel voltsPanel = new TestPanel("volts");
+		voltsPanel = new EnergyPanel();
 		add(voltsPanel,
 				new GBC(0, 2)
 				.setInsets(5)
@@ -44,7 +45,7 @@ public class Cockpit extends JPanel {
 		add(altitudePanel,
 				new GBC(1, 2)
 				.setInsets(5)
-				.setWeight(1.5, 0)
+				.setWeight(1.3, 0)
 				.setFill(GBC.HORIZONTAL));
 		
 
@@ -55,6 +56,5 @@ public class Cockpit extends JPanel {
 				.setSpan(1, 3)
 				.setWeight(2, 1)
 				.setFill(GBC.BOTH));
-		
 	}
 }
