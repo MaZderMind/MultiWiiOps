@@ -1,10 +1,12 @@
 package de.mazdermind.MultiWiiOps.UI.Cockpit;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
+
+import com.horstmann.corejava.GBC;
 
 
 public class AltitudePanel extends JPanel {
@@ -14,18 +16,23 @@ public class AltitudePanel extends JPanel {
 
 	public AltitudePanel() {
 		super();
-		setLayout(new BorderLayout());
+		setLayout(new GridBagLayout());
 		setForeground(new Color(0, 0, 128));
 		
 		altitude = new MeterPanel(72, 80);
 		altitude.setText("52.25 m");
 		altitude.setForeground(getForeground());
-		add(altitude, BorderLayout.CENTER);
+		add(altitude, new GBC(0, 0)
+			.setWeight(1, 1)
+			.setFill(GBC.BOTH));
+	
 
 		preasure = new MeterPanel(30, 25);
 		preasure.setText("2048 mBar");
 		preasure.setForeground(getForeground());
-		add(preasure, BorderLayout.SOUTH);
+		add(preasure, new GBC(0, 1)
+			.setWeight(1, 1)
+			.setFill(GBC.BOTH));
 	}
 	
 	@Override
