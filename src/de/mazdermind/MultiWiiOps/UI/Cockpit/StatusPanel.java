@@ -5,8 +5,6 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 
-import de.mazdermind.MultiWiiOps.UI.TestPanel;
-
 public class StatusPanel extends JLabel {
 	private static final long serialVersionUID = 5999631872010288870L;
 
@@ -14,21 +12,21 @@ public class StatusPanel extends JLabel {
 		setLayout(new GridLayout(2, 6, 20, 20));
 		setOpaque(false);
 
-		add(new TestPanel("ACC", Color.GREEN));
-		add(new TestPanel("BARO", Color.GREEN));
-		add(new TestPanel("MAG", Color.GREEN));
+		add(new StatusLedPanel("ACC", Color.GREEN));
+		add(new StatusLedPanel("BARO", Color.GREEN));
+		add(new StatusLedPanel("MAG", Color.GREEN));
 		
-		add(new TestPanel("ARM", Color.YELLOW));
-		add(new TestPanel("STABLE", Color.YELLOW));
-		add(new TestPanel("HORIZON", Color.YELLOW));
+		add(new StatusLedPanel("ARM", Color.YELLOW));
+		add(new StatusLedPanel("STABLE", Color.YELLOW));
+		add(new StatusLedPanel("HORIZON", Color.YELLOW));
 		
-		add(new TestPanel("GPS", Color.GREEN));
-		add(new TestPanel("SONAR", Color.GREEN));
-		add(new TestPanel("OPTIC", Color.GREEN));
+		add(new StatusLedPanel("GPS", Color.GREEN));
+		add(new StatusLedPanel("SONAR", Color.GREEN));
+		add(new StatusLedPanel("OPTIC", Color.GREEN));
 		
-		add(new TestPanel("ALTHOLD", Color.YELLOW));
-		add(new TestPanel("HEADFREE", Color.YELLOW));
-		add(new TestPanel("HEADADJ", Color.YELLOW));
+		add(new StatusLedPanel("ALTHOLD", Color.YELLOW));
+		add(new StatusLedPanel("HEADFREE", Color.YELLOW));
+		add(new StatusLedPanel("HEADADJ", Color.YELLOW));
 	}
 
 }
