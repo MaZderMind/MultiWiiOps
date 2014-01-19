@@ -40,6 +40,5 @@ public class RoundTestPanel extends TestPanel {
 		
 		g.setColor(getForeground());
 		g.drawString(getText(), tx, ty);
-		
    }
 }
