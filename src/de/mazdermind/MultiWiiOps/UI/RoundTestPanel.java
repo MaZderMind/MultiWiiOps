@@ -9,18 +9,22 @@ public class RoundTestPanel extends TestPanel {
 
 	public RoundTestPanel() {
 		super();
+		setOpaque(false);
 	}
 
 	public RoundTestPanel(Color bg) {
 		super(bg);
+		setOpaque(false);
 	}
 
 	public RoundTestPanel(String label, Color bg) {
 		super(label, bg);
+		setOpaque(false);
 	}
 
 	public RoundTestPanel(String label) {
 		super(label);
+		setOpaque(false);
 	}
 
 	public void paintComponent(Graphics g) {
