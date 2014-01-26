@@ -23,8 +23,7 @@ public class HorizonPanel extends JPanel {
 	 * setup and initialize colors to defaults
 	 */
 	public HorizonPanel() {
-		setBackground(EARTH);
-		setForeground(AIR);
+		this(EARTH, AIR);
 	}
 
 	/**
