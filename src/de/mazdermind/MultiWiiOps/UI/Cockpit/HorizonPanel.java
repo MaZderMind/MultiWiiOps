@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,7 @@ public class HorizonPanel extends JPanel {
 	public static final Color EARTH = new Color(186, 142, 0);
 
 	private float roll = 0, pitch = 0;
+	private Polygon triangle;
 
 	/**
 	 * setup and initialize colors to defaults
@@ -32,6 +34,10 @@ public class HorizonPanel extends JPanel {
 	public HorizonPanel(Color earth, Color air) {
 		setBackground(earth);
 		setForeground(air);
+
+		int xPoly[] = {0, 5, 10};
+		int yPoly[] = {0, 10, 0};
+		triangle = new Polygon(xPoly, yPoly, xPoly.length);
 	}
 
 	/**
@@ -50,10 +56,39 @@ public class HorizonPanel extends JPanel {
 		// g is actually a g2; it just doesn't know yet ;)
 		Graphics2D g2 = (Graphics2D)g;
 
-		// useful integers
+		drawHorizon(g2);
+		drawIndicators(g2);
+	}
+
+	/**
+	 * draws the roll and pitch indicators at the bottom and right side
+	 * @param g2 Graphics-Context to operate on
+	 */
+	private void drawIndicators(Graphics2D g2) {
 		int
 			w = getWidth() - 1,
 			h = getHeight() - 1,
+			sz = Math.min(w,  h),
+			x = (w - sz) / 2,
+			y = (h - sz) / 2;
+
+		g2.setColor(Color.BLACK);
+		g2.drawLine(x, y+sz, x+sz, y+sz);
+		g2.drawLine(x+sz, y, x+sz, y+sz);
+
+		g2.translate(x+(sz * (roll + 90) / 180)-5, y+sz-8);
+		g2.fillPolygon(triangle);
+	}
+
+	/**
+	 * draws the virtual horizon as rotated and clipped areas
+	 * TODO: also draw textual and center markers
+	 * @param g2 Graphics-Context to operate on
+	 */
+	private void drawHorizon(Graphics2D g2) {
+		int
+			w = getWidth() - 1 - 3/* space for the indicator-bar */,
+			h = getHeight() - 1 - 3/* space for the indicator-bar */,
 			sz = Math.min(w,  h),
 			x = (w - sz) / 2,
 			y = (h - sz) / 2;
