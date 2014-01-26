@@ -37,8 +37,8 @@ public class RoundTestPanel extends TestPanel {
 		Color bg = getBackground();
 		g.setColor(bg);
 		g.fillArc(x, y, sz, sz, 0, 360);
-		
+
 		g.setColor(getForeground());
 		g.drawString(getText(), tx, ty);
-   }
+	}
 }
