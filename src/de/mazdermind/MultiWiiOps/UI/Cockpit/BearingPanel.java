@@ -12,8 +12,8 @@ public class BearingPanel extends JPanel {
 	public BearingPanel() {
 		setLayout(new GridLayout(1, 2, 2*5, 0));
 		setOpaque(false);
-		
-		add(new RoundTestPanel("horizon"));
+
+		add(new HorizonPanel());
 		add(new RoundTestPanel("compass"));
 	}
 }
