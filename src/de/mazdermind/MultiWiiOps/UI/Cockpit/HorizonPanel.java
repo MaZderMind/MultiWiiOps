@@ -9,16 +9,20 @@ import java.awt.GraphicsConfiguration;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
 public class HorizonPanel extends JPanel {
+	private static final Logger log = Logger.getLogger( HorizonPanel.class.getName() );
 	private static final long serialVersionUID = -8537524917689154790L;
 	public static final Color AIR = new Color(117, 255, 243);
 	public static final Color EARTH = new Color(186, 142, 0);
 
-	private float roll = 0, pitch = 0;
+	private float roll = 180, pitch = 180;
 	private Polygon triangle;
 
 	/**
@@ -34,10 +38,29 @@ public class HorizonPanel extends JPanel {
 	public HorizonPanel(Color earth, Color air) {
 		setBackground(earth);
 		setForeground(air);
+		setOpaque(false);
 
 		int xPoly[] = {0, 5, 10};
 		int yPoly[] = {0, 10, 0};
 		triangle = new Polygon(xPoly, yPoly, xPoly.length);
+
+		final HorizonPanel horizonPanel = this;
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int d = e.getButton() == MouseEvent.BUTTON1 ? 1 : -1;
+				if(e.isShiftDown())
+				{
+					horizonPanel.setPitch(horizonPanel.getPitch() + 5 * d);
+					log.info("pitch="+horizonPanel.getPitch());
+				}
+				else
+				{
+					horizonPanel.setRoll(horizonPanel.getRoll() + 5 * d);
+					log.info("roll="+horizonPanel.getRoll());
+				}
+			}
+		});
 	}
 
 	/**
@@ -76,7 +99,7 @@ public class HorizonPanel extends JPanel {
 		g2.drawLine(x, y+sz, x+sz, y+sz);
 		g2.drawLine(x+sz, y, x+sz, y+sz);
 
-		g2.translate(x+(sz * (roll + 90) / 180)-5, y+sz-8);
+		g2.translate(x - 5 + ((roll / 360) * sz), y+sz-8);
 		g2.fillPolygon(triangle);
 	}
 
@@ -87,9 +110,9 @@ public class HorizonPanel extends JPanel {
 	 */
 	private void drawHorizon(Graphics2D g2) {
 		int
-			w = getWidth() - 1 - 3/* space for the indicator-bar */,
-			h = getHeight() - 1 - 3/* space for the indicator-bar */,
-			sz = Math.min(w,  h),
+			w = getWidth() - 1,
+			h = getHeight() - 1,
+			sz = Math.min(w,  h) - 3,
 			x = (w - sz) / 2,
 			y = (h - sz) / 2;
 
@@ -124,14 +147,14 @@ public class HorizonPanel extends JPanel {
 		// anti-aliasing is carried over to give us the desired soft clipping
 		// effect.
 		gfx.setComposite(AlphaComposite.SrcAtop);
-		gfx.rotate(Math.toRadians(roll), w/2, h/2);
+		gfx.rotate(Math.toRadians(roll-180), w/2, h/2);
 
 		// paint content
 		gfx.setColor(getBackground());
 		gfx.fillRect(0, 0, w, h);
 
 		gfx.setColor(getForeground());
-		gfx.fillRect(0, (int)(h/2 + (pitch/180*h)), w, h);
+		gfx.fillRect(0, (int)(h/2 + ((pitch-180) / 360 * sz)), w, h);
 
 		gfx.dispose();
 
