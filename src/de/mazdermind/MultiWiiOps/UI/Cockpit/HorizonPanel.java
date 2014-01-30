@@ -147,7 +147,7 @@ public class HorizonPanel extends JPanel {
 		// anti-aliasing is carried over to give us the desired soft clipping
 		// effect.
 		gfx.setComposite(AlphaComposite.SrcAtop);
-		gfx.rotate(Math.toRadians(roll-180), w/2, h/2);
+		gfx.rotate(Math.toRadians(roll), w/2, h/2);
 
 		// paint content
 		gfx.setColor(getBackground());
@@ -176,6 +176,7 @@ public class HorizonPanel extends JPanel {
 	 */
 	public void setRoll(float roll) {
 		this.roll = roll % 360;
+		if(this.roll < 0) this.roll = 360 + this.roll;
 		this.repaint();
 	}
 
