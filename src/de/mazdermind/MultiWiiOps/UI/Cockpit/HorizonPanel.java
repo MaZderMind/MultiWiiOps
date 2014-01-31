@@ -11,6 +11,8 @@ import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.logging.Logger;
 
@@ -21,6 +23,7 @@ public class HorizonPanel extends JPanel {
 	private static final long serialVersionUID = -8537524917689154790L;
 	public static final Color AIR = new Color(183, 225, 236);
 	public static final Color EARTH = new Color(118, 86, 57);
+	private static final int YSCALE = 4;
 
 	private float roll = 180, pitch = 180;
 	private Polygon triangle;
@@ -80,14 +83,14 @@ public class HorizonPanel extends JPanel {
 		Graphics2D g2 = (Graphics2D)g;
 
 		drawHorizon(g2);
-		drawIndicators(g2);
+		drawArrows(g2);
 	}
 
 	/**
 	 * draws the roll and pitch indicators at the bottom and right side
 	 * @param g2 Graphics-Context to operate on
 	 */
-	private void drawIndicators(Graphics2D g2) {
+	private void drawArrows(Graphics2D g2) {
 		int
 			w = getWidth() - 1,
 			h = getHeight() - 1,
@@ -99,7 +102,17 @@ public class HorizonPanel extends JPanel {
 		g2.drawLine(x, y+sz, x+sz, y+sz);
 		g2.drawLine(x+sz, y, x+sz, y+sz);
 
-		g2.translate(x - 5 + ((roll / 360) * sz), y+sz-8);
+		AffineTransform oldTransform = g2.getTransform();
+
+		g2.translate(x - 5 + ((1 - roll / 360) * sz), y+sz-10);
+		g2.fillPolygon(triangle);
+
+		g2.setTransform(oldTransform);
+
+		int myx = x + sz - 10;
+		int myy = (int) (y + 5 + ((pitch / 360) * sz));
+		g2.rotate(Math.toRadians(-90), myx, myy);
+		g2.translate(myx, myy);
 		g2.fillPolygon(triangle);
 	}
 
@@ -147,19 +160,64 @@ public class HorizonPanel extends JPanel {
 		// anti-aliasing is carried over to give us the desired soft clipping
 		// effect.
 		gfx.setComposite(AlphaComposite.SrcAtop);
-		gfx.rotate(Math.toRadians(roll), w/2, h/2);
+		gfx.rotate(Math.toRadians(180 - roll), w/2, h/2);
 
 		// paint content
-		gfx.setColor(getBackground());
-		gfx.fillRect(0, 0, w, h);
-
-		gfx.setColor(getForeground());
-		gfx.fillRect(0, (int)(h/2 + ((pitch-180) / 360 * sz)), w, h);
+		drawHorizonContent(x, w, h, sz, gfx);
 
 		gfx.dispose();
 
 		// Copy our intermediate image to the screen
 		g2.drawImage(img, 0, 0, null);
+	}
+
+	private void drawHorizonContent(int x, int w, int h, int sz, Graphics2D gfx) {
+		gfx.setColor(getBackground());
+		gfx.fillRect(0, 0, w, h);
+
+		gfx.setColor(getForeground());
+		gfx.fillRect(0, 0, w, (int)(h/2 + ((pitch-180) / 360 * sz * YSCALE)));
+
+		GraphicsConfiguration gc = gfx.getDeviceConfiguration();
+		BufferedImage imgText = gc.createCompatibleImage(w, h, Transparency.TRANSLUCENT);
+		Graphics2D gfxText = imgText.createGraphics();
+
+		// anti alias is working when painting on gfx but not on gfxText
+		gfxText.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		gfxText.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+		float h360 = (float)sz/360*YSCALE;
+		int w2 = sz/2, h2 = sz/2;
+		int w4 = sz/4, w43 = w4*3;
+		int w3 = sz/3, w32 = w3*2;
+
+		gfx.setColor(Color.WHITE);
+		gfxText.setColor(Color.WHITE);
+
+		gfxText.drawLine(x+w3, h/2, x+w32, h/2);
+
+		int angles[] = {150,160,170,190,200,210};
+		for (int i = 0; i < angles.length; i++) {
+			int angle = angles[i];
+			int y = (int)(h360 * (angle - 180)) + h2;
+
+			if(i == 0 || i == angles.length-1)
+				gfxText.drawLine(w3+x, y, w32+x, y);
+			else
+				gfxText.drawLine(w4+x, y, w43+x, y);
+
+			String angleStr = String.valueOf(angle);
+			Rectangle2D stringBounds = gfxText.getFontMetrics().getStringBounds(angleStr, gfx);
+
+			gfxText.setComposite(AlphaComposite.Clear);
+			gfxText.fillRect(x + w2 - (int)stringBounds.getCenterX() - 5, y - 4 + (int)stringBounds.getCenterY(), (int)stringBounds.getWidth() + 10, (int)stringBounds.getHeight());
+
+			gfxText.setComposite(AlphaComposite.Src);
+			gfxText.drawString(angleStr, x + w2 - (int)stringBounds.getCenterX(), y - (int)stringBounds.getCenterY());
+		}
+
+		gfxText.dispose();
+		gfx.drawImage(imgText, 0, 0, null);
 	}
 
 	/**
@@ -175,8 +233,7 @@ public class HorizonPanel extends JPanel {
 	 * @param roll new roll in degrees
 	 */
 	public void setRoll(float roll) {
-		this.roll = roll % 360;
-		if(this.roll < 0) this.roll = 360 + this.roll;
+		this.roll = normalize(roll);
 		this.repaint();
 	}
 
@@ -193,7 +250,20 @@ public class HorizonPanel extends JPanel {
 	 * @param pitch new pitch in degrees
 	 */
 	public void setPitch(float pitch) {
-		this.pitch = pitch % 360;
+		this.pitch = normalize(pitch);
 		this.repaint();
+	}
+
+	/**
+	 * normalize angle value to 0-360°
+	 * @param angle any angle, possibly outside of 0-360°
+	 * @return normalized value to the 0-350° range
+	 */
+	private float normalize(float angle) {
+		angle = angle % 360;
+		if(angle < 0)
+			angle += 360;
+
+		return angle;
 	}
 }
