@@ -19,8 +19,8 @@ import javax.swing.JPanel;
 public class HorizonPanel extends JPanel {
 	private static final Logger log = Logger.getLogger( HorizonPanel.class.getName() );
 	private static final long serialVersionUID = -8537524917689154790L;
-	public static final Color AIR = new Color(117, 255, 243);
-	public static final Color EARTH = new Color(186, 142, 0);
+	public static final Color AIR = new Color(183, 225, 236);
+	public static final Color EARTH = new Color(118, 86, 57);
 
 	private float roll = 180, pitch = 180;
 	private Polygon triangle;
