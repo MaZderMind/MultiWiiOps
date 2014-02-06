@@ -2,7 +2,6 @@ package de.mazdermind.MultiWiiOps.UI.Cockpit;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -17,9 +16,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.logging.Logger;
 
-import javax.swing.JPanel;
-
-public class HorizonPanel extends JPanel {
+public class HorizonPanel extends AngularPanel {
 	private static final long serialVersionUID = -8537524917689154790L;
 	private static final Logger log = Logger.getLogger( HorizonPanel.class.getName() );
 
@@ -55,9 +52,9 @@ public class HorizonPanel extends JPanel {
 	 * setup and initialize colors
 	 */
 	public HorizonPanel(Color earth, Color air) {
+		super();
 		setBackground(earth);
 		setForeground(air);
-		setOpaque(false);
 
 
 		int xPoly[] = {0, 5, 10};
@@ -82,15 +79,6 @@ public class HorizonPanel extends JPanel {
 				}
 			}
 		});
-	}
-
-	/**
-	 * return empty dimensions as preferred size, thus leaving all sizing
-	 * up to the layout-manager
-	 */
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension();
 	}
 
 	/**
@@ -305,20 +293,5 @@ public class HorizonPanel extends JPanel {
 	public void setPitch(float pitch) {
 		this.pitch = normalize(pitch);
 		this.repaint();
-	}
-
-
-
-	/**
-	 * normalize angle value to 0-360°
-	 * @param angle any angle, possibly outside of 0-360°
-	 * @return normalized value to the 0-350° range
-	 */
-	private float normalize(float angle) {
-		angle = angle % 360;
-		if(angle < 0)
-			angle += 360;
-
-		return angle;
 	}
 }
