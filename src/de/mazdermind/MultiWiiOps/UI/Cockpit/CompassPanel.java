@@ -11,6 +11,7 @@ import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.logging.Logger;
 
@@ -68,6 +69,7 @@ public class CompassPanel extends AngularPanel {
 			w = getWidth() - 1,
 			h = getHeight() - 1,
 			sz = Math.min(w,  h) - strokeWidth - 1,
+			sz2 = sz/2,
 			x = (w - sz) / 2,
 			y = (h - sz) / 2,
 			cx = x + sz/2,
@@ -81,17 +83,27 @@ public class CompassPanel extends AngularPanel {
 		gfx.setColor(Color.BLACK);
 
 		gfx.setStroke(new BasicStroke(strokeWidth));
-		
+
 		gfx.setColor(Color.WHITE);
 		gfx.fillOval(x, y, sz, sz);
-		
+
 		gfx.setColor(Color.BLACK);
 		gfx.drawOval(x, y, sz, sz);
 
+		AffineTransform transform = gfx.getTransform();
+
 		gfx.rotate(Math.toRadians(heading), cx, cy);
 		gfx.translate(cx, cy);
-		gfx.scale(sz/20, sz/20);
+		gfx.scale(sz/22, sz/22);
 		gfx.fillPolygon(arrow);
+
+		gfx.setTransform(transform);
+
+		for(float r = 0; r < 360; r += 22.5)
+		{
+			gfx.rotate(Math.toRadians(r), cx, cy);
+			gfx.drawLine(cx, cy + sz2 - 15, cx, cy + sz2 - strokeWidth);
+		}
 
 		gfx.dispose();
 
