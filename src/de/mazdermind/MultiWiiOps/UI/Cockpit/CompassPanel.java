@@ -1,9 +1,12 @@
 package de.mazdermind.MultiWiiOps.UI.Cockpit;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.Image;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.event.MouseAdapter;
@@ -17,9 +20,14 @@ public class CompassPanel extends AngularPanel {
 
 	private float heading = 180, northing = 180;
 	private boolean hasNorthing;
+	private Polygon arrow;
 
 	public CompassPanel() {
 		super();
+
+		 int[] xPoly = { -2,  0, +2, 0 };
+		 int[] yPoly = { -2, 10, -2, 0 };
+		 arrow = new Polygon(xPoly,  yPoly, xPoly.length);
 
 		// experimental mouse input routines to test pitch- & roll display
 		final CompassPanel compassPanel = this;
@@ -56,19 +64,34 @@ public class CompassPanel extends AngularPanel {
 
 	private Image generateHeadingLayer(GraphicsConfiguration dc) {
 		int
+			strokeWidth = 1,
 			w = getWidth() - 1,
 			h = getHeight() - 1,
-			sz = Math.min(w,  h),
+			sz = Math.min(w,  h) - strokeWidth - 1,
 			x = (w - sz) / 2,
-			y = (h - sz) / 2;
+			y = (h - sz) / 2,
+			cx = x + sz/2,
+			cy = y + sz/2;
 
 		BufferedImage img = dc.createCompatibleImage(w, h, Transparency.TRANSLUCENT);
 		Graphics2D gfx = img.createGraphics();
 
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		gfx.setColor(getForeground());
+		gfx.setColor(Color.BLACK);
+
+		gfx.setStroke(new BasicStroke(strokeWidth));
+		
+		gfx.setColor(Color.WHITE);
 		gfx.fillOval(x, y, sz, sz);
+		
+		gfx.setColor(Color.BLACK);
+		gfx.drawOval(x, y, sz, sz);
+
+		gfx.rotate(Math.toRadians(heading), cx, cy);
+		gfx.translate(cx, cy);
+		gfx.scale(sz/20, sz/20);
+		gfx.fillPolygon(arrow);
 
 		gfx.dispose();
 
