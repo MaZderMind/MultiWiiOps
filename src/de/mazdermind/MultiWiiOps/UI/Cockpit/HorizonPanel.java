@@ -23,12 +23,12 @@ public class HorizonPanel extends AngularPanel {
 	/**
 	 * default air color (light blue)
 	 */
-	public static final Color AIR = new Color(183, 225, 236);
+	public static final Color AIR = new Color(0xB7E1EC);
 
 	/**
 	 * default earth color (light brown)
 	 */
-	public static final Color EARTH = new Color(118, 86, 57);
+	public static final Color EARTH = new Color(0x765639);
 
 	/**
 	 * PITCH_SCALE=1 would display 360° (-180° to +180°) from top to bottom of the artificial horizon
