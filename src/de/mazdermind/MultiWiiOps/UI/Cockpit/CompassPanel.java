@@ -1,6 +1,5 @@
 package de.mazdermind.MultiWiiOps.UI.Cockpit;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -19,16 +18,33 @@ public class CompassPanel extends AngularPanel {
 	private static final long serialVersionUID = -8263909346345873374L;
 	private static final Logger log = Logger.getLogger( CompassPanel.class.getName() );
 
+	/**
+	 * default background color (light yellow)
+	 */
+	public static final Color BACKGROUND = new Color(0xFFFDCC);
+
+	/**
+	 * default foreground color (black)
+	 */
+	public static final Color FOREGROUND = Color.BLACK;
+
 	private float heading = 180, northing = 180;
 	private boolean hasNorthing;
 	private Polygon arrow;
 
 	public CompassPanel() {
+		this(BACKGROUND, FOREGROUND);
+	}
+
+	public CompassPanel(Color bg, Color fg) {
 		super();
 
-		 int[] xPoly = { -2,  0, +2, 0 };
-		 int[] yPoly = { -2, 10, -2, 0 };
-		 arrow = new Polygon(xPoly,  yPoly, xPoly.length);
+		setBackground(bg);
+		setForeground(fg);
+
+		int[] xPoly = { -2,  0, +2, 0 };
+		int[] yPoly = { -2, 10, -2, 0 };
+		arrow = new Polygon(xPoly,  yPoly, xPoly.length);
 
 		// experimental mouse input routines to test pitch- & roll display
 		final CompassPanel compassPanel = this;
@@ -65,10 +81,9 @@ public class CompassPanel extends AngularPanel {
 
 	private Image generateHeadingLayer(GraphicsConfiguration dc) {
 		int
-			strokeWidth = 1,
 			w = getWidth() - 1,
 			h = getHeight() - 1,
-			sz = Math.min(w,  h) - strokeWidth - 1,
+			sz = Math.min(w,  h),
 			sz2 = sz/2,
 			x = (w - sz) / 2,
 			y = (h - sz) / 2,
@@ -80,16 +95,10 @@ public class CompassPanel extends AngularPanel {
 
 		gfx.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		gfx.setColor(Color.BLACK);
-
-		gfx.setStroke(new BasicStroke(strokeWidth));
-
-		gfx.setColor(Color.WHITE);
+		gfx.setColor(getBackground());
 		gfx.fillOval(x, y, sz, sz);
 
-		gfx.setColor(Color.BLACK);
-		gfx.drawOval(x, y, sz, sz);
-
+		gfx.setColor(getForeground());
 		AffineTransform transform = gfx.getTransform();
 
 		gfx.rotate(Math.toRadians(heading), cx, cy);
@@ -102,7 +111,7 @@ public class CompassPanel extends AngularPanel {
 		for(float r = 0; r < 360; r += 22.5)
 		{
 			gfx.rotate(Math.toRadians(r), cx, cy);
-			gfx.drawLine(cx, cy + sz2 - 15, cx, cy + sz2 - strokeWidth);
+			gfx.drawLine(cx, cy + sz2 - 15, cx, cy + sz2);
 		}
 
 		gfx.dispose();
