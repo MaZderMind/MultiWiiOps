@@ -172,7 +172,6 @@ public class HorizonPanel extends AngularPanel {
 		int angles[] = {150,160,170,190,200,210};
 
 		final int extraTextSpacingX = 5;
-
 		for (int i = 0; i < angles.length; i++) {
 			int angle = angles[i];
 
@@ -193,11 +192,20 @@ public class HorizonPanel extends AngularPanel {
 
 			// clear the area required by the string from the line below it
 			gfx.setComposite(AlphaComposite.Clear);
-			gfx.fillRect(x + sz2 - (int)stringBounds.getCenterX() - extraTextSpacingX, txty + (int)stringBounds.getCenterY(), (int)stringBounds.getWidth() + 2*extraTextSpacingX, (int)stringBounds.getHeight());
+			gfx.fillRect(
+				x + sz2 - (int)stringBounds.getCenterX() - extraTextSpacingX,
+				txty + (int)stringBounds.getCenterY(),
+				(int)stringBounds.getWidth() + 2*extraTextSpacingX,
+				(int)stringBounds.getHeight()
+			);
 
 			// draw the text into the cleared area
 			gfx.setComposite(AlphaComposite.Src);
-			gfx.drawString(angleStr, x + sz2 - (int)stringBounds.getCenterX(), txty - (int)stringBounds.getCenterY());
+			gfx.drawString(
+				angleStr,
+				x + sz2 - (int)stringBounds.getCenterX(),
+				txty - (int)stringBounds.getCenterY()
+			);
 		}
 
 		// return the Layer-Image
