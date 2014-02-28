@@ -12,6 +12,6 @@ public class BearingPanel extends JPanel {
 		setOpaque(false);
 
 		add(new HorizonPanel());
-		add(new CompassPanel());
+		add(new CompassPanel(true));
 	}
 }
