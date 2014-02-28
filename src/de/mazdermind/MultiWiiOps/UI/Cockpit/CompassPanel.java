@@ -12,6 +12,7 @@ import java.awt.Transparency;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
@@ -153,40 +154,56 @@ public class CompassPanel extends AngularPanel {
 		gfx.scale(sz/24.5, sz/24.5);
 		gfx.fillPolygon(arrow);
 
-		gfx.setTransform(transform);
-
-		final double deltaAngle = 22.5;
 		final int extraTextSpacingX = 5;
-		for(float angle = 0; angle < 360; angle += deltaAngle)
+		for(float angle = 0; angle < 360; angle += 22.5)
 		{
+			gfx.setTransform(transform);
+			gfx.rotate(Math.toRadians(180 + angle), cx, cy);
 			gfx.drawLine(cx, cy + sz2 - 17, cx, cy + sz2);
+		}
 
-			int intAngle = Math.round(angle);
-			if(hasNorthing && CARDINAL_NAMES.containsKey(intAngle))
+
+		if(hasNorthing)
+		{
+			gfx.setTransform(transform);
+
+
+			for(int angle = 0; angle < 360; angle += 45)
 			{
-				String angleStr = CARDINAL_NAMES.get(intAngle);
+				String angleStr = CARDINAL_NAMES.get(angle);
 				Rectangle2D stringBounds = gfx.getFontMetrics().getStringBounds(angleStr, gfx);
+
+				AffineTransform textTransform = (AffineTransform)transform.clone();
+				textTransform.rotate(Math.toRadians(180 + angle), cx , cy);
+				Point2D strPlace = textTransform.transform(new Point2D.Double(
+					cx,
+					cy + sz2 - stringBounds.getHeight()/2
+				), null);
+
+				long
+					strX = Math.round(strPlace.getX() - stringBounds.getWidth() / 2),
+					strY = Math.round(strPlace.getY() + stringBounds.getHeight() / 3);
 
 				// clear the area required by the string from the line below it
 				gfx.setComposite(AlphaComposite.Clear);
 				gfx.fillRect(
-					cx - (int)stringBounds.getCenterX() - extraTextSpacingX,
-					cy + sz2 - 3 - (int)stringBounds.getCenterY() - (int)stringBounds.getHeight(),
+					(int)strX - extraTextSpacingX,
+					(int)strY - (int)stringBounds.getHeight() + 3,
 					(int)stringBounds.getWidth() + 2*extraTextSpacingX,
-					(int)stringBounds.getHeight()-2
+					(int)stringBounds.getHeight()
 				);
 
 				// draw the text into the cleared area
 				gfx.setComposite(AlphaComposite.Src);
 				gfx.drawString(
 					angleStr,
-					cx - (int)stringBounds.getCenterX(),
-					cy + sz2 - 7 - (int)stringBounds.getCenterY()
+					(int)strX,
+					(int)strY
 				);
 			}
-
-			gfx.rotate(Math.toRadians(deltaAngle), cx, cy);
 		}
+
+
 
 		gfx.dispose();
 
